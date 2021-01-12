@@ -8,18 +8,16 @@ blogRouter.route('/')
     res.statusCode = 200;
     res.setHeader('Content-type','text/html');
     res.send('This is the list of blogs!');
-    next();
 })
 .post((req,res,next)=>{
     res.statusCode = 200;
-    res.setHeader = ('Content-type','text/html');
+    res.setHeader('Content-type','text/html');
     res.send('Your Blog is posted Succesfully!')
 })
 .put((req,res,next)=>{
-    res.statusCode = 403;
+    res.statusCode = 200;
     res.setHeader('Content-type','text/html');
-    var err = new Error('You cant do PUT operation on "/"')
-    next(err);
+    res.send('PUT not supported');
 })
 .delete((req,res,next)=>{
     res.statusCode = 200;
@@ -32,13 +30,12 @@ blogRouter.route('/:blogId')
 .get((req,res,next)=>{
     res.statusCode = 200;
     res.setHeader('Content-type','text/html');
-    res.send(`Displaying Blog with id : ${blogId}`);
+    res.send(`Displaying Blog with id : ${req.params.blogId}`);
 })
 .post((req,res,next)=>{
-    res.statusCode = 403;
+    res.statusCode = 200;
     res.setHeader('Content-type','text/html');
-    var err = new Error('You cant do POST operation on "/:blogId"')
-    next(err);
+    res.send('POST not supported');;
 })
 .put((req,res,next)=>{
     res.statusCode = 200;
