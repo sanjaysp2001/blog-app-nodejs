@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var mongoose = require('mongoose');
 var User = require('../models/user');
+var config = require('../config');
 var authenticate = require('../authenticate');
 var router = express.Router();
 router.use(bodyParser.json());
@@ -45,9 +46,10 @@ router.post('/signup',(req,res,next)=>{
 });
 
 router.post('/login',passport.authenticate('local'),(req,res)=>{
+  var token = authenticate.getToken({_id:req.user._id});
   res.statusCode = 200;
   res.setHeader('Content-type','application/json');
-  res.send({status: "success"});
-})
+  res.send({status: "success",token: token});
+});
 
 module.exports = router;
