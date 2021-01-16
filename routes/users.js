@@ -10,7 +10,13 @@ router.use(bodyParser.json());
 
 /* GET users listing. */
 router.get('/', (req, res, next)=>{
-  res.send("This is the list of users");
+  User.find()
+  .populate('blogs')
+  .then((user)=>{
+    res.statusCode = 200;
+    res.setHeader('Content-type','application/json');
+    res.json(user);
+  })
 });
 
 router.post('/signup',(req,res,next)=>{
@@ -34,12 +40,10 @@ router.post('/signup',(req,res,next)=>{
           res.json({err:err,line:"33"});
         }
         else{
-          passport.authenticate('local'),(req,res,()=>{
             res.statusCode = 200;
             res.setHeader('Content-type','application/json');
             res.json({success: true,status: "Registration Successful!"})
-          });
-        }
+          }
       });
     }
   });
